@@ -72,4 +72,11 @@ object ExpenseManager {
             ExpenseCategory.OTHER,
         )
     }
+
+    fun deleteExpense(expense: Expense)  {
+        val index = fakeExpenseList.indexOfFirst {
+            it.id == expense.id
+        }
+        fakeExpenseList.removeAt(index)
+    }
 }

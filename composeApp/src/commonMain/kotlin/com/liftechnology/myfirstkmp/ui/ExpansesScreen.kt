@@ -27,16 +27,18 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.liftechnology.myfirstkmp.DarkModeColor
-import com.liftechnology.myfirstkmp.data.ExpenseManager
 import com.liftechnology.myfirstkmp.getColorsTheme
 import com.liftechnology.myfirstkmp.model.Expense
+import com.liftechnology.myfirstkmp.presentation.ExpenseUiState
 
 @Composable
-fun ExpensesScreen( onExpenseClick: (expense: Expense) -> Unit){
+fun ExpensesScreen(
+    uiState: ExpenseUiState,
+    onExpenseClick: (expense: Expense) -> Unit
+){
     val colors = getColorsTheme()
 
     LazyColumn (
@@ -47,12 +49,12 @@ fun ExpensesScreen( onExpenseClick: (expense: Expense) -> Unit){
             Column (
                 modifier = Modifier.background(color = colors.backgroundColor)
             ){
-                ExpensesTotalHeader(total = 1028.8, colors)
+                ExpensesTotalHeader(total = uiState.total, colors)
                 AllExpensesHeader()
             }
         }
 
-        items(ExpenseManager.fakeExpenseList){ expense ->
+        items(uiState.expenses){ expense ->
             ExpenseItem(
                 expense = expense,
                 onExpenseClick = { onExpenseClick }
@@ -82,7 +84,7 @@ fun ExpensesTotalHeader(total: Double, colors: DarkModeColor){
                 text= "$$total",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.ExtraBold,
-                color = Color.White
+                color = colors.textColor
             )
             Text(
                 modifier = Modifier.align ( Alignment.CenterEnd ),
@@ -163,19 +165,22 @@ fun ExpenseItem(
                 Text(
                     text = expense.category.name,
                     fontWeight = FontWeight.ExtraBold,
-                    fontSize = 18.sp
+                    fontSize = 18.sp,
+                    color = colors.textColor
                 )
                 Text(
                     text = expense.description,
                     fontWeight = FontWeight.ExtraBold,
-                    fontSize = 15.sp
+                    fontSize = 15.sp,
+                    color = Color.Gray
                 )
             }
 
             Text(
                 text = "$${expense.amount}",
                 fontWeight = FontWeight.ExtraBold,
-                fontSize = 20.sp
+                fontSize = 20.sp,
+                color = colors.textColor
             )
         }
     }

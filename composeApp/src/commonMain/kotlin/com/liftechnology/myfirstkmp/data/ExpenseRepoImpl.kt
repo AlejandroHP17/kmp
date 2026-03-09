@@ -22,4 +22,8 @@ class ExpenseRepoImpl(
     override fun getCategories(): List<ExpenseCategory> {
         return expenseManager.getCategories()
     }
+
+    override fun deleteExpense(expense: Expense): List<Expense> {
+        TODO("Not yet implemented")
+    }
 }
